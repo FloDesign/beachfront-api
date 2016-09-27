@@ -9,4 +9,7 @@ Author: Craig Thompson
 Author URI: http://flodesign.co.uk
 */
 
-require_once('Beachfront_Booking_API.php');
+add_action( 'rest_api_init', function () {
+    require_once(plugin_dir_path(__FILE__) . '/Beachfront_Booking_API.php');
+    Beachfront_Booking_API::instance()->register_routes();
+});
