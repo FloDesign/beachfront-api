@@ -3,6 +3,6 @@
   "description": "API endpoints for booking management",
   "type": "wordpress-plugin",
   "require": {
-    "composer/installers": "v1.0.12"
+    "composer/installers": "v1.0.25"
   }
 }
