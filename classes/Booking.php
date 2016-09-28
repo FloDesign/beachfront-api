@@ -36,9 +36,9 @@ class Booking
         
         $booking = get_posts($args);
         
-        foreach($booking as $post) {
+        foreach ($booking as $post) {
             $post->startdate = get_field('start_date', $booking->ID);
-            $post->startdate = get_field('end_date', $booking->ID);
+            $post->enddate   = get_field('end_date', $booking->ID);
             $post->villa     = get_field('villa', $booking->ID);
         }
         
