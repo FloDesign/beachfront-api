@@ -76,6 +76,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     public function get_items($request)
     {
         $bookings = $this->booking->getBookings($request);
+        die(var_dump($bookings));
         $data     = array();
         foreach ($bookings as $item) {
             $itemdata = $this->prepare_item_for_response($item, $request);
