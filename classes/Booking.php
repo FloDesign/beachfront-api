@@ -55,6 +55,11 @@ class Booking
             
             $bookings = get_posts($args);
             
+            foreach($bookings as $booking){
+                $meta = get_post_meta($booking->ID);
+                $booking['meta'] = $meta;
+            }
+            
             return $bookings;
         } else {
             $villa_args = array(
@@ -78,6 +83,11 @@ class Booking
             );
             
             $bookings = get_posts($booking_args);
+    
+            foreach($bookings as $booking){
+                $meta = get_post_meta($booking->ID);
+                $booking['meta'] = $meta;
+            }
             
             return $bookings;
         }
