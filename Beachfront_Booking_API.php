@@ -97,11 +97,11 @@ class Beachfront_Booking_API extends WP_REST_Controller
         //get parameters from request
         $params  = $request->get_params();
         $booking = $this->booking->getBooking($params);
-        $data    = $this->prepare_item_for_response($booking, $request);
+        //$data    = $this->prepare_item_for_response($booking, $request);
         
         //return a response or error based on some conditional
         if (is_array($booking)) {
-            return new WP_REST_Response($data, 200);
+            return new WP_REST_Response($booking, 200);
         } else {
             return new WP_Error('cant-find', __('Could not find that booking'));
         }
