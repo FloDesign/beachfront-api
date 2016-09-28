@@ -96,6 +96,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     {
         //get parameters from request
         $params  = $request->get_params();
+        die(var_dump($params));
         $booking = $this->booking->getBooking($params);
         //$data    = $this->prepare_item_for_response($booking, $request);
         
