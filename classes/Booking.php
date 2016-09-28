@@ -16,6 +16,7 @@ class Booking
     
     /**
      * Return a single booking based on ID from query string
+     *
      * @param $params
      *
      * @return WP_Query
@@ -24,12 +25,14 @@ class Booking
     {
         die(var_dump($params));
         $args = array(
-            'post_type' => 'booking',
+            'post_type'  => 'booking',
             'meta_query' => array(
-                'key' => 'booking_id',
-                'compare' => '==',
-                'value' => $params['id']
-            )
+                array(
+                    'key'     => 'booking_id',
+                    'compare' => '==',
+                    'value'   => $params['id'],
+                ),
+            ),
         );
         
         $bookings = get_posts($args);
@@ -56,10 +59,10 @@ class Booking
             
             $bookings = get_posts($args);
             
-            foreach($bookings as $booking){
+            foreach ($bookings as $booking) {
                 $booking->startdate = get_field('start_date', $booking->ID);
-                $booking->enddate = get_field('end_date', $booking->ID);
-                $booking->villa = get_field('villa', $booking->ID);
+                $booking->enddate   = get_field('end_date', $booking->ID);
+                $booking->villa     = get_field('villa', $booking->ID);
             }
             
             return $bookings;
@@ -85,11 +88,11 @@ class Booking
             );
             
             $bookings = get_posts($booking_args);
-    
-            foreach($bookings as $booking){
+            
+            foreach ($bookings as $booking) {
                 $booking->startdate = get_field('start_date', $booking->ID);
-                $booking->enddate = get_field('end_date', $booking->ID);
-                $booking->villa = get_field('villa', $booking->ID);
+                $booking->enddate   = get_field('end_date', $booking->ID);
+                $booking->villa     = get_field('villa', $booking->ID);
             }
             
             return $bookings;
@@ -98,6 +101,7 @@ class Booking
     
     /**
      * Create booking from array of data
+     *
      * @param $request
      *
      * @return bool
@@ -130,13 +134,13 @@ class Booking
         );
         
         $booking = get_posts($args);
-    
-        if(isset($data['booking'])){
+        
+        if (isset($data['booking'])) {
             $booking = wp_update_post($data['booking']);
         }
-    
-        if(isset($data['booking_meta'])){
-            foreach($data['booking_meta'] as $key => $value){
+        
+        if (isset($data['booking_meta'])) {
+            foreach ($data['booking_meta'] as $key => $value) {
                 update_post_meta($booking->ID, $key, $value);
             }
         }
@@ -146,6 +150,7 @@ class Booking
     
     /**
      * Deletes a single booking record
+     *
      * @param $request
      *
      * @return mixed
