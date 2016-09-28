@@ -24,14 +24,12 @@ class Beachfront_Booking_API extends WP_REST_Controller
             '/'.$base,
             array(
                 array(
-                    'methods'             => WP_REST_Server::READABLE,
-                    'callback'            => array($this, 'get_items'),
-                    'permission_callback' => array($this, 'get_items_permissions_check'),
+                    'methods'  => WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_items'),
                 ),
                 array(
-                    'methods'             => WP_REST_Server::CREATABLE,
-                    'callback'            => array($this, 'create_item'),
-                    'permission_callback' => array($this, 'create_item_permissions_check'),
+                    'methods'  => WP_REST_Server::CREATABLE,
+                    'callback' => array($this, 'create_item'),
                 ),
             )
         );
@@ -40,19 +38,16 @@ class Beachfront_Booking_API extends WP_REST_Controller
             '/'.$base.'/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
             array(
                 array(
-                    'methods'             => WP_REST_Server::READABLE,
-                    'callback'            => array($this, 'get_item'),
-                    'permission_callback' => array($this, 'get_item_permissions_check'),
+                    'methods'  => WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_item'),
                 ),
                 array(
-                    'methods'             => WP_REST_Server::EDITABLE,
-                    'callback'            => array($this, 'update_item'),
-                    'permission_callback' => array($this, 'update_item_permissions_check'),
+                    'methods'  => WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_item'),
                 ),
                 array(
-                    'methods'             => WP_REST_Server::DELETABLE,
-                    'callback'            => array($this, 'delete_item'),
-                    'permission_callback' => array($this, 'delete_item_permissions_check'),
+                    'methods'  => WP_REST_Server::DELETABLE,
+                    'callback' => array($this, 'delete_item'),
                 ),
             )
         );
@@ -79,7 +74,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
         $data     = array();
         foreach ($bookings as $item) {
             //$itemdata = $this->prepare_item_for_response($item, $request);
-            $data[]   = $this->prepare_response_for_collection($item);
+            $data[] = $this->prepare_response_for_collection($item);
         }
         
         return new WP_REST_Response($data, 200);
@@ -166,68 +161,6 @@ class Beachfront_Booking_API extends WP_REST_Controller
         }
         
         return new WP_Error('cant-delete', __('Could not delete the booking'), array('status' => 500));
-    }
-    
-    /**
-     * Check if a given request has access to get items
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     *
-     * @return WP_Error|bool
-     */
-    public function get_items_permissions_check($request)
-    {
-        return true; //<--use to make readable by all
-        //return current_user_can('read_post');
-    }
-    
-    /**
-     * Check if a given request has access to get a specific item
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     *
-     * @return WP_Error|bool
-     */
-    public function get_item_permissions_check($request)
-    {
-        return $this->get_items_permissions_check($request);
-    }
-    
-    /**
-     * Check if a given request has access to create items
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     *
-     * @return WP_Error|bool
-     */
-    public function create_item_permissions_check($request)
-    {
-        die(var_dump(wp_get_current_user()));
-        return current_user_can('edit_others_posts');
-    }
-    
-    /**
-     * Check if a given request has access to update a specific item
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     *
-     * @return WP_Error|bool
-     */
-    public function update_item_permissions_check($request)
-    {
-        return $this->create_item_permissions_check($request);
-    }
-    
-    /**
-     * Check if a given request has access to delete a specific item
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     *
-     * @return WP_Error|bool
-     */
-    public function delete_item_permissions_check($request)
-    {
-        return $this->create_item_permissions_check($request);
     }
     
     /**
