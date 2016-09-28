@@ -55,7 +55,7 @@ class Booking
             
             $bookings = get_posts($args);
             
-            return json_encode($bookings);
+            return $bookings;
         } else {
             $villa_args = array(
                 'post_type'  => 'villa',
