@@ -34,9 +34,13 @@ class Booking
             ),
         );
         
-        $bookings = get_posts($args);
+        $booking = get_posts($args);
         
-        return $bookings;
+        $booking->startdate = get_field('start_date', $booking->ID);
+        $booking->startdate = get_field('end_date', $booking->ID);
+        $booking->villa = get_field('villa', $booking->ID);
+        
+        return $booking;
         
     }
     
