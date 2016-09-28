@@ -79,7 +79,7 @@ class Booking
             
             $bookings = get_posts($booking_args);
             
-            return json_encode($bookings);
+            return $bookings
         }
     }
     
