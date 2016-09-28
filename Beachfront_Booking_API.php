@@ -76,7 +76,6 @@ class Beachfront_Booking_API extends WP_REST_Controller
     public function get_items($request)
     {
         $bookings = $this->booking->getBookings($request);
-        die(var_dump($bookings));
         $data     = array();
         foreach ($bookings as $item) {
             $itemdata = $this->prepare_item_for_response($item, $request);
@@ -120,10 +119,10 @@ class Beachfront_Booking_API extends WP_REST_Controller
         
         $item = $this->prepare_item_for_database($request);
         
-            $data = $this->booking->createBooking($item);
-            if (is_array($data)) {
-                return new WP_REST_Response($data, 200);
-            }
+        $data = $this->booking->createBooking($item);
+        if (is_array($data)) {
+            return new WP_REST_Response($data, 200);
+        }
         
         return new WP_Error('cant-create', __('Could not create a booking'), array('status' => 500));
         
@@ -141,10 +140,10 @@ class Beachfront_Booking_API extends WP_REST_Controller
     {
         $item = $this->prepare_item_for_database($request);
         
-            $data = $this->booking->updateBooking($item);
-            if (is_array($data)) {
-                return new WP_REST_Response($data, 200);
-            }
+        $data = $this->booking->updateBooking($item);
+        if (is_array($data)) {
+            return new WP_REST_Response($data, 200);
+        }
         
         return new WP_Error('cant-update', __('Could not update the booking'), array('status' => 500));
         
@@ -161,10 +160,10 @@ class Beachfront_Booking_API extends WP_REST_Controller
     {
         $item = $this->prepare_item_for_database($request);
         
-            $deleted = $this->booking->deleteBooking($item);
-            if ($deleted) {
-                return new WP_REST_Response(true, 200);
-            }
+        $deleted = $this->booking->deleteBooking($item);
+        if ($deleted) {
+            return new WP_REST_Response(true, 200);
+        }
         
         return new WP_Error('cant-delete', __('Could not delete the booking'), array('status' => 500));
     }
