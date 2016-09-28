@@ -134,7 +134,7 @@ class Booking
     {
         $args = array(
             'post_type'      => 'booking',
-            'id'             => $request['booking_id'],
+            'id'             => $request['id'],
             'posts_per_page' => 1,
         );
         
@@ -162,8 +162,8 @@ class Booking
      */
     public function deleteBooking($request)
     {
-        if ( ! isset($request['booking_id'])) {
-            return wp_delete_post($request['booking_id']);
+        if ( ! isset($request['id'])) {
+            return wp_delete_post($request['id']);
         }
     }
 }
