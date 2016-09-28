@@ -202,6 +202,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function create_item_permissions_check($request)
     {
+        die(wp_get_current_user());
         return current_user_can('edit_others_posts');
     }
     
