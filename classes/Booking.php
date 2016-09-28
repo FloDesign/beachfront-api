@@ -23,7 +23,6 @@ class Booking
      */
     public function getBooking($params)
     {
-        die(var_dump($params));
         $args = array(
             'post_type'  => 'booking',
             'meta_query' => array(
