@@ -37,7 +37,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
         );
         register_rest_route(
             $namespace,
-            '/'.$base.'/(?P<id>^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$+)',
+            '/'.$base.'/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
             array(
                 array(
                     'methods'             => WP_REST_Server::READABLE,
