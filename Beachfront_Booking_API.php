@@ -1,13 +1,14 @@
 <?php
+require_once('classes/Booking.php');
 
-use Beachfront\Booking;
+use Beachfront\Booking as Booking;
 
 class Beachfront_Booking_API extends WP_REST_Controller
 {
     
     public function __construct()
     {
-        $this->booking = new Beachfront\Booking();
+        $this->booking = new Booking();
     }
     
     /**
