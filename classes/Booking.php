@@ -31,7 +31,7 @@ class Booking
             )
         );
         
-        $bookings = new WP_Query($args);
+        $bookings = get_posts($args);
         
         return $bookings;
         
@@ -53,7 +53,7 @@ class Booking
                 'posts_per_page' => -1,
             );
             
-            $bookings = new WP_Query($args);
+            $bookings = get_posts($args);
             
             return json_encode($bookings);
         } else {
@@ -66,7 +66,7 @@ class Booking
                 ),
             );
             
-            $villa = new WP_Query($villa_args);
+            $villa = get_posts($villa_args);
             
             $booking_args = array(
                 'post_type'  => 'booking',
@@ -77,7 +77,7 @@ class Booking
                 ),
             );
             
-            $bookings = new WP_Query($booking_args);
+            $bookings = get_posts($booking_args);
             
             return json_encode($bookings);
         }
@@ -116,7 +116,7 @@ class Booking
             'posts_per_page' => 1,
         );
         
-        $booking = new WP_Query($args);
+        $booking = get_posts($args);
     
         if(isset($data['booking'])){
             $booking = wp_update_post($data['booking']);
