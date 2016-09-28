@@ -13,7 +13,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     /**
      * Register the routes for the objects of the controller.
      */
-    public static function register_routes()
+    public function register_routes()
     {
         $version   = '1';
         $namespace = 'beachfront/v'.$version;
