@@ -7,7 +7,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     
     public function __construct()
     {
-        $this->booking = new Booking();
+        $this->booking = new Beachfront\Booking();
     }
     
     /**
