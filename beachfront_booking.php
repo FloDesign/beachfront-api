@@ -11,5 +11,6 @@ Author URI: http://flodesign.co.uk
 
 add_action( 'rest_api_init', function () {
     require_once(plugin_dir_path(__FILE__) . '/Beachfront_Booking_API.php');
-    Beachfront_Booking_API::register_routes();
+    $api = new Beachfront_Booking_API();
+    $api->register_routes();
 });
