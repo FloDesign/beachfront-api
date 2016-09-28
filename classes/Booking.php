@@ -132,17 +132,7 @@ class Booking
      */
     public function updateBooking($request)
     {
-        $args = array(
-            'post_type'      => 'booking',
-            'id'             => $request['id'],
-            'posts_per_page' => 1,
-        );
-        
-        $booking = get_posts($args);
-        
-        if (isset($data['booking'])) {
-            $booking = wp_update_post($data['booking']);
-        }
+        $booking = wp_update_post($request);
         
         if (isset($data['booking_meta'])) {
             foreach ($data['booking_meta'] as $key => $value) {
