@@ -56,8 +56,8 @@ class Booking
             $bookings = get_posts($args);
             
             foreach($bookings as $booking){
-                $meta = get_post_meta($booking->ID);
-                $booking->meta = $meta;
+                $booking->startdate = get_field('start_date', $booking->ID);
+                $booking->enddate = get_field('end_date', $booking->ID);
                 $booking->villa = get_field('villa', $booking->ID);
             }
             
@@ -86,8 +86,8 @@ class Booking
             $bookings = get_posts($booking_args);
     
             foreach($bookings as $booking){
-                $meta = get_post_meta($booking->ID);
-                $booking->meta = $meta;
+                $booking->startdate = get_field('start_date', $booking->ID);
+                $booking->enddate = get_field('end_date', $booking->ID);
                 $booking->villa = get_field('villa', $booking->ID);
             }
             
