@@ -177,8 +177,8 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function get_items_permissions_check($request)
     {
-        //return true; <--use to make readable by all
-        return current_user_can('read_post');
+        return true; //<--use to make readable by all
+        //return current_user_can('read_post');
     }
     
     /**
