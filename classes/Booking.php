@@ -57,9 +57,8 @@ class Booking
             
             foreach($bookings as $booking){
                 $meta = get_post_meta($booking->ID);
-                $villa = get_post_meta($meta->villa);
                 $booking->meta = $meta;
-                $booking->villa = $villa;
+                $booking->villa = get_field('villa', $booking->ID);
             }
             
             return $bookings;
@@ -88,9 +87,8 @@ class Booking
     
             foreach($bookings as $booking){
                 $meta = get_post_meta($booking->ID);
-                $villa = get_post_meta($meta->villa);
                 $booking->meta = $meta;
-                $booking->villa = $villa;
+                $booking->villa = get_field('villa', $booking->ID);
             }
             
             return $bookings;
