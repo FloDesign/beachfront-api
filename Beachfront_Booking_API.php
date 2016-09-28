@@ -111,10 +111,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function create_item($request)
     {
-        
-        $item = $this->prepare_item_for_database($request);
-        
-        $data = $this->booking->createBooking($item);
+        $data = $this->booking->createBooking($request);
         if (is_array($data)) {
             return new WP_REST_Response($data, 200);
         }
@@ -133,9 +130,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function update_item($request)
     {
-        $item = $this->prepare_item_for_database($request);
-        
-        $data = $this->booking->updateBooking($item);
+        $data = $this->booking->updateBooking($request);
         if (is_array($data)) {
             return new WP_REST_Response($data, 200);
         }
@@ -153,26 +148,12 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function delete_item($request)
     {
-        $item = $this->prepare_item_for_database($request);
-        
-        $deleted = $this->booking->deleteBooking($item);
+        $deleted = $this->booking->deleteBooking($request);
         if ($deleted) {
             return new WP_REST_Response(true, 200);
         }
         
         return new WP_Error('cant-delete', __('Could not delete the booking'), array('status' => 500));
-    }
-    
-    /**
-     * Prepare the item for create or update operation
-     *
-     * @param WP_REST_Request $request Request object
-     *
-     * @return WP_Error|object $prepared_item
-     */
-    protected function prepare_item_for_database($request)
-    {
-        return array();
     }
     
     /**
