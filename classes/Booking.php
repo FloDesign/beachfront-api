@@ -57,7 +57,7 @@ class Booking
             
             foreach($bookings as $booking){
                 $meta = get_post_meta($booking->ID);
-                $booking['meta'] = $meta;
+                $booking->meta = $meta;
             }
             
             return $bookings;
@@ -86,7 +86,7 @@ class Booking
     
             foreach($bookings as $booking){
                 $meta = get_post_meta($booking->ID);
-                $booking['meta'] = $meta;
+                $booking->meta = $meta;
             }
             
             return $bookings;
