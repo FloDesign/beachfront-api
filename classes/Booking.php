@@ -132,11 +132,28 @@ class Booking
      */
     public function updateBooking($request)
     {
-        $booking = wp_update_post($request);
+        $args = array(
+            'post_type'      => 'booking',
+            'meta_query' => array(
+                array(
+                    'key'     => 'booking_id',
+                    'compare' => '==',
+                    'value'   => $request['id'],
+                ),
+            ),
+        );
         
-        if (isset($data['booking_meta'])) {
-            foreach ($data['booking_meta'] as $key => $value) {
-                update_post_meta($booking->ID, $key, $value);
+        $booking = get_posts($args);
+        
+        $request['ID'] = $booking->ID;
+        $update = wp_update_post($request);
+        
+        if($update) {
+            if (isset($request['start_date'])) {
+                $updateMeta = update_post_meta($booking->ID, 'start_date', $request['start_date']);
+            }
+            if (isset($request['end_date'])) {
+                $updateMeta = update_post_meta($booking->ID, 'end_date', $request['end_date']);
             }
         }
         
