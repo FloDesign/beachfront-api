@@ -135,6 +135,7 @@ class Booking
         try {
             $args = array(
                 'post_type'  => 'booking',
+                'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit', 'trash'),
                 'meta_query' => array(
                     array(
                         'key'     => 'booking_id',
