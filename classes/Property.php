@@ -10,9 +10,9 @@ class Property
     {
         if (isset($params['id'])) {
             $args = array(
-                'post_type'  => 'villa',
+                'post_type'      => 'villa',
                 'posts_per_page' => -1,
-                'meta_query' => array(
+                'meta_query'     => array(
                     array(
                         'key'     => 'property_id',
                         'compare' => '==',
@@ -22,8 +22,8 @@ class Property
             );
         } else {
             $args = array(
-                'post_type' => 'villa',
-                'posts_per_page' => -1
+                'post_type'      => 'villa',
+                'posts_per_page' => -1,
             );
         }
         
@@ -42,17 +42,16 @@ class Property
                     'inherit',
                     'trash',
                 ),
-                'meta_query'  => array(
-                    array(
-                        'key'     => 'villa',
-                        'compare' => '==',
-                        'value'   => $property->ID,
-                    ),
-                ),
             );
             
             $bookings = get_posts($booking_args);
-            $property->bookings = $bookings;
+            
+            foreach ($bookings as $booking) {
+                $villa = get_field('villa', $booking->ID)
+                if ($villa->ID = $property->ID) {
+                    $property->bookings = $bookings;
+                }
+            }
         }
         
         return $properties;
