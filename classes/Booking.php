@@ -177,11 +177,9 @@ class Booking
             }
         }
         
-        foreach ($booking as $post) {
-            $post->startdate = get_field('start_date', $post->ID);
-            $post->enddate   = get_field('end_date', $post->ID);
-            $post->villa     = get_field('villa', $post->ID);
-        }
+            $booking->startdate = get_field('start_date', $booking->ID);
+            $booking->enddate   = get_field('end_date', $booking->ID);
+            $booking->villa     = get_field('villa', $booking->ID);
         
         return $booking;
     }
