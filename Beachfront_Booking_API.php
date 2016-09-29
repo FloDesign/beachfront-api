@@ -134,7 +134,8 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function create_item($request)
     {
-        $result = $this->booking->createBooking($request);
+        $params = $request->get_params();
+        $result = $this->booking->createBooking($params);
         if ($result instanceof Exception) {
             return new WP_Error('cant-create', __($result->getMessage()), array('status' => 500));
         }
