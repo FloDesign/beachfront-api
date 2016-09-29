@@ -47,10 +47,9 @@ class Property
             $bookings = get_posts($booking_args);
             
             foreach ($bookings as $booking) {
-                die(var_dump(get_field('villa', $booking->ID)));
                 $villa = get_field('villa', $booking->ID);
                 
-                if ($villa->ID == $property->ID) {
+                if ($villa[0]->ID == $property->ID) {
                     $property->bookings = $bookings;
                 }
             }
