@@ -181,7 +181,9 @@ class Booking
                             'post_status' => 'publish',
                         );
                     }
+                    remove_action('pre_post_update', 'wp_save_post_revision');
                     $post_id = wp_update_post($data);
+                    add_action( 'post_updated', 'wp_save_post_revision' );
                 }
             }
             
