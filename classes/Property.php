@@ -46,6 +46,8 @@ class Property
             
             $bookings = get_posts($booking_args);
             
+            die(var_dump($bookings));
+            
             foreach ($bookings as $booking) {
                 $villa = get_field('villa', $booking->ID);
                 
