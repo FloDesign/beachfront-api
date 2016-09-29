@@ -65,9 +65,10 @@ class Booking
         $bookings = get_posts($args);
         
         foreach ($bookings as $booking) {
-            $booking->startdate = get_field('start_date', $booking->ID);
-            $booking->enddate   = get_field('end_date', $booking->ID);
-            $booking->villa     = get_field('villa', $booking->ID);
+            $booking->startdate  = get_field('start_date', $booking->ID);
+            $booking->enddate    = get_field('end_date', $booking->ID);
+            $booking->villa      = get_field('villa', $booking->ID);
+            $booking->booking_id = get_field('booking_id', $booking->ID);
         }
         
         return $bookings;
@@ -176,9 +177,10 @@ class Booking
                 $booking = get_post($post_id);
             }
             
-            $booking->startdate = get_field('start_date', $booking->ID);
-            $booking->enddate   = get_field('end_date', $booking->ID);
-            $booking->villa     = get_field('villa', $booking->ID);
+            $booking->startdate  = get_field('start_date', $booking->ID);
+            $booking->enddate    = get_field('end_date', $booking->ID);
+            $booking->villa      = get_field('villa', $booking->ID);
+            $booking->booking_id = get_field('booking_id', $booking->ID);
             
             return $booking;
         } catch (Exception $e) {
