@@ -101,7 +101,11 @@ class Booking
             return new \Exception('Requires a booking_id');
         }
         
-        $post = array();
+        $post = array(
+            'post_content' => '',
+            'post_title' => $request['booking_id'],
+            'post_excerpt' => ''
+        );
         
         $result = wp_insert_post($post, true);
         
