@@ -134,6 +134,7 @@ class Booking
         $booking = get_post($result);
         
         $booking->villa = $properties[0];
+        $booking->booking_id = get_field('booking_id', $booking);
         return $booking;
     }
     
@@ -259,6 +260,10 @@ class Booking
         
         $booking = get_posts($args);
         
-        return wp_delete_post($booking[0]->ID);
+        if(count($bookings > 0)){
+            return wp_delete_post($booking[0]->ID);
+        } else {
+            return new Exception('Could not find a booking with that ID');
+        }
     }
 }
