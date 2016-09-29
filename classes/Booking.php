@@ -132,56 +132,61 @@ class Booking
      */
     public function updateBooking($request)
     {
-        $args = array(
-            'post_type'  => 'booking',
-            'meta_query' => array(
-                array(
-                    'key'     => 'booking_id',
-                    'compare' => '==',
-                    'value'   => $request['id'],
-                ),
-            ),
-        );
-        
-        $bookings = get_posts($args);
-        
-        $booking = $bookings[0];
-        
-        if ($booking) {
-            if (isset($request['start_date'])) {
-                update_post_meta($booking->ID, 'start_date', $request['start_date']);
-            }
-            if (isset($request['end_date'])) {
-                update_post_meta($booking->ID, 'end_date', $request['end_date']);
-            }
-            if (isset($request['property_id'])) {
-                $villa_args = array(
-                    'post_type'  => 'villa',
-                    'meta_query' => array(
-                        'key'     => 'property_id',
+        try {
+            $args = array(
+                'post_type'  => 'booking',
+                'meta_query' => array(
+                    array(
+                        'key'     => 'booking_id',
                         'compare' => '==',
-                        'value'   => $request['property_id'],
+                        'value'   => $request['id'],
                     ),
-                );
-                
-                $villa = get_posts($villa_args);
-                
-                update_field('villa', $villa, $booking->ID);
-            }
-            if (isset($request['show_booking'])) {
-                if($request['show_booking'] == 'true'){
-                    wp_transition_post_status( 'publish', $booking->post_status, $booking );
-                } else {
-                    wp_transition_post_status( 'draft', $booking->post_status, $booking );
+                ),
+            );
+            
+            $bookings = get_posts($args);
+            
+            $booking = $bookings[0];
+            
+            if ($booking) {
+                if (isset($request['start_date'])) {
+                    update_post_meta($booking->ID, 'start_date', $request['start_date']);
+                }
+                if (isset($request['end_date'])) {
+                    update_post_meta($booking->ID, 'end_date', $request['end_date']);
+                }
+                if (isset($request['property_id'])) {
+                    $villa_args = array(
+                        'post_type'  => 'villa',
+                        'meta_query' => array(
+                            'key'     => 'property_id',
+                            'compare' => '==',
+                            'value'   => $request['property_id'],
+                        ),
+                    );
+                    
+                    $villa = get_posts($villa_args);
+                    
+                    update_field('villa', $villa, $booking->ID);
+                }
+                if (isset($request['show_booking'])) {
+                    if ($request['show_booking'] == 'true') {
+                        wp_transition_post_status('publish', $booking->post_status, $booking);
+                    } else {
+                        wp_transition_post_status('draft', $booking->post_status, $booking);
+                    }
                 }
             }
-        }
-        
+            
             $booking->startdate = get_field('start_date', $booking->ID);
             $booking->enddate   = get_field('end_date', $booking->ID);
             $booking->villa     = get_field('villa', $booking->ID);
+            
+            return $booking;
+        } catch (Exception $e) {
+            return new WP_Error('cant-update', __('Could not update the booking'), array('status' => 500));
+        }
         
-        return $booking;
     }
     
     /**

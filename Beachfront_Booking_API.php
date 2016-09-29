@@ -95,7 +95,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
         //$data    = $this->prepare_item_for_response($booking, $request);
         
         //return a response or error based on some conditional
-        if ($booking instanceof WP_Post) {
+        if (is_array($booking)) {
             return new WP_REST_Response($booking, 200);
         } else {
             return new WP_Error('cant-find', __('Could not find that booking'));
@@ -130,15 +130,14 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function update_item($request)
     {
-        $data = $request->get_params();
+        $data   = $request->get_params();
         $result = $this->booking->updateBooking($request);
         
-        if (is_array($result)) {
+        if ($result instanceof WP_Error) {
+            return $result;
+        } else {
             return new WP_REST_Response($result, 200);
         }
-        
-        return new WP_Error('cant-update', __('Could not update the booking'), array('status' => 500));
-        
     }
     
     /**
