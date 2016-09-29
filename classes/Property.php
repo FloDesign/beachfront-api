@@ -11,7 +11,7 @@ class Property
         if (isset($params['id'])) {
             $args = array(
                 'post_type'  => 'villa',
-                'posts_per_page' => -1
+                'posts_per_page' => -1,
                 'meta_query' => array(
                     array(
                         'key'     => 'property_id',
