@@ -261,6 +261,8 @@ class Booking
         
         $booking = get_posts($args);
         
+        die(var_dump($booking));
+        
         if(count($booking > 0)){
             return wp_delete_post($booking[0]->ID);
         } else {
