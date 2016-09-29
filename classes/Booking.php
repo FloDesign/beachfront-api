@@ -172,18 +172,16 @@ class Booking
                 if (isset($request['show_booking'])) {
                     if ($request['show_booking'] == 'true') {
                         $data = array(
-                            'ID' => $booking->ID,
-                            'post_status' => 'publish'
+                            'ID'          => $booking->ID,
+                            'post_status' => 'publish',
                         );
-                        wp_update_post($data);
                     } else {
                         $data = array(
-                            'ID' => $booking->ID,
-                            'post_status' => 'publish'
+                            'ID'          => $booking->ID,
+                            'post_status' => 'publish',
                         );
-                        wp_update_post($data);
                     }
-                    
+                    die(var_dump(wp_update_post($data)));
                 }
             }
             
