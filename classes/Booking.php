@@ -145,13 +145,12 @@ class Booking
         
         $booking = get_posts($args);
         
-        $bookingArr = (array) $booking;
-        
         foreach($request as $key => $value){
-            $bookingArr[$key] = $value;
+            $data = $request->get_param($key);
+            $booking[$key] = $data;
         }
         
-        die(var_dump($bookingArr));
+        die(var_dump($booking));
         
         $update = wp_update_post($booking);
         
