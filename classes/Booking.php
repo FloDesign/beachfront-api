@@ -143,14 +143,16 @@ class Booking
             ),
         );
         
-        $booking = get_posts($args);
+        $bookings = get_posts($args);
+        
+        $booking = $bookings[0];
         
         if ($booking) {
             if (isset($request['start_date'])) {
-                update_post_meta($booking[0]->ID, 'start_date', $request['start_date']);
+                update_post_meta($booking->ID, 'start_date', $request['start_date']);
             }
             if (isset($request['end_date'])) {
-                update_post_meta($booking[0]->ID, 'end_date', $request['end_date']);
+                update_post_meta($booking->ID, 'end_date', $request['end_date']);
             }
             if (isset($request['property_id'])) {
                 $villa_args = array(
@@ -164,13 +166,13 @@ class Booking
                 
                 $villa = get_posts($villa_args);
                 
-                update_field('villa', $villa, $booking[0]->ID);
+                update_field('villa', $villa, $booking->ID);
             }
             if (isset($request['show_booking'])) {
                 if($request['show_booking'] == 'true'){
-                    wp_transition_post_status( 'publish', $booking[0]->post_status, $booking );
+                    wp_transition_post_status( 'publish', $booking->post_status, $booking );
                 } else {
-                    wp_transition_post_status( 'draft', $booking[0]->post_status, $booking );
+                    wp_transition_post_status( 'draft', $booking->post_status, $booking );
                 }
             }
         }
