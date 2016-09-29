@@ -132,6 +132,7 @@ class Booking
      */
     public function updateBooking($request)
     {
+        die(var_dump($request));
         $args = array(
             'post_type'      => 'booking',
             'meta_query' => array(
@@ -148,7 +149,7 @@ class Booking
         foreach($request as $key => $value){
             $booking->$key = $value;
         }
-        die(var_dump($booking));
+        
         $update = wp_update_post($booking);
         
         if($update) {
