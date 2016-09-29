@@ -267,7 +267,7 @@ class Booking
             }
             return true;
         } else {
-            return new Exception('Could not find a booking with that ID');
+            return new \Exception('Could not find a booking with that ID');
         }
     }
 }
