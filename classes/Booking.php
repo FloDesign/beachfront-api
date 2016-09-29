@@ -167,8 +167,8 @@ class Booking
                 update_field('villa', $villa, $booking[0]->ID);
             }
             if (isset($request['show_booking'])) {
-                if($request['show_booking'] == true){
-                    wp_transition_post_status( 'published', $booking[0]->post_status, $booking );
+                if($request['show_booking'] == 'true'){
+                    wp_transition_post_status( 'publish', $booking[0]->post_status, $booking );
                 } else {
                     wp_transition_post_status( 'draft', $booking[0]->post_status, $booking );
                 }
