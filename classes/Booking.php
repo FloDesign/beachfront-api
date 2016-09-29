@@ -145,7 +145,7 @@ class Booking
         
         $booking = get_posts($args);
         
-        $request['ID'] = $booking->ID;
+        $request['ID'] = $booking[0]->ID;
         $update = wp_update_post($request);
         
         if($update) {
