@@ -1,7 +1,9 @@
 <?php
 require_once('classes/Booking.php');
+require_once('classes/Property.php');
 
 use Beachfront\Booking as Booking;
+use Beachfront\Property as Property;
 
 class Beachfront_Booking_API extends WP_REST_Controller
 {
@@ -9,6 +11,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     public function __construct()
     {
         $this->booking = new Booking();
+        $this->property = new Property();
     }
     
     /**
@@ -57,6 +60,26 @@ class Beachfront_Booking_API extends WP_REST_Controller
             array(
                 'methods'  => WP_REST_Server::READABLE,
                 'callback' => array($this, 'get_public_item_schema'),
+            )
+        );
+        register_rest_route(
+            $namespace,
+            '/properties',
+            array(
+                array(
+                    'methods'  => WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_property'),
+                ),
+            )
+        );
+        register_rest_route(
+            $namespace,
+            '/properties' . '/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
+            array(
+                array(
+                    'methods'  => WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_property'),
+                ),
             )
         );
     }
@@ -155,6 +178,23 @@ class Beachfront_Booking_API extends WP_REST_Controller
         }
         
         return new WP_Error('cant-delete', __('Could not delete the booking'), array('status' => 500));
+    }
+    
+    public function get_property($request)
+    {
+        if(json_decode($request) != null) {
+            $data = json_decode($request);
+        } else {
+            $data = $request;
+        }
+    
+        $result = $this->property->getProperty($data);
+    
+        if ($result instanceof WP_Error) {
+            return $result;
+        } else {
+            return new WP_REST_Response($result, 200);
+        }
     }
     
     /**

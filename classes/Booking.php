@@ -6,14 +6,6 @@ namespace Beachfront;
 
 class Booking
 {
-    
-    /**
-     * Properties
-     */
-    
-    private $booking_id;
-    
-    
     /**
      * Return a single booking based on ID from query string
      *
@@ -55,53 +47,32 @@ class Booking
      */
     public function getBookings($request)
     {
-        if ( ! isset($request['property_id'])) {
-            
-            $args = array(
-                'post_type'      => 'booking',
-                'posts_per_page' => -1,
-            );
-            
-            $bookings = get_posts($args);
-            
-            foreach ($bookings as $booking) {
-                $booking->startdate = get_field('start_date', $booking->ID);
-                $booking->enddate   = get_field('end_date', $booking->ID);
-                $booking->villa     = get_field('villa', $booking->ID);
-            }
-            
-            return $bookings;
-        } else {
-            $villa_args = array(
-                'post_type'  => 'villa',
-                'meta_query' => array(
-                    'key'     => 'property_id',
-                    'compare' => '==',
-                    'value'   => $request['property_id'],
-                ),
-            );
-            
-            $villa = get_posts($villa_args);
-            
-            $booking_args = array(
-                'post_type'  => 'booking',
-                'meta_query' => array(
-                    'key'        => 'villa',
-                    'comparison' => '==',
-                    'value'      => $villa->id,
-                ),
-            );
-            
-            $bookings = get_posts($booking_args);
-            
-            foreach ($bookings as $booking) {
-                $booking->startdate = get_field('start_date', $booking->ID);
-                $booking->enddate   = get_field('end_date', $booking->ID);
-                $booking->villa     = get_field('villa', $booking->ID);
-            }
-            
-            return $bookings;
+        $args = array(
+            'post_type'      => 'booking',
+            'posts_per_page' => -1,
+            'post_status'    => array(
+                'publish',
+                'pending',
+                'draft',
+                'auto-draft',
+                'future',
+                'private',
+                'inherit',
+                'trash',
+            ),
+        );
+        
+        $bookings = get_posts($args);
+        
+        foreach ($bookings as $booking) {
+            $booking->startdate = get_field('start_date', $booking->ID);
+            $booking->enddate   = get_field('end_date', $booking->ID);
+            $booking->villa     = get_field('villa', $booking->ID);
         }
+        
+        return $bookings;
+        
+        
     }
     
     /**
@@ -111,8 +82,10 @@ class Booking
      *
      * @return bool
      */
-    public function createBooking($request)
-    {
+    public
+    function createBooking(
+        $request
+    ) {
         $result = wp_insert_post($request);
         
         if (is_integer($result)) {
@@ -130,13 +103,24 @@ class Booking
      *
      * @return WP_Query
      */
-    public function updateBooking($request)
-    {
+    public
+    function updateBooking(
+        $request
+    ) {
         try {
             $args = array(
-                'post_type'  => 'booking',
-                'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit', 'trash'),
-                'meta_query' => array(
+                'post_type'   => 'booking',
+                'post_status' => array(
+                    'publish',
+                    'pending',
+                    'draft',
+                    'auto-draft',
+                    'future',
+                    'private',
+                    'inherit',
+                    'trash',
+                ),
+                'meta_query'  => array(
                     array(
                         'key'     => 'booking_id',
                         'compare' => '==',
@@ -210,8 +194,10 @@ class Booking
      *
      * @return mixed
      */
-    public function deleteBooking($request)
-    {
+    public
+    function deleteBooking(
+        $request
+    ) {
         if ( ! isset($request['id'])) {
             return wp_delete_post($request['id']);
         }
