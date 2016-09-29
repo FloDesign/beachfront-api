@@ -261,8 +261,11 @@ class Booking
         
         $booking = get_posts($args);
         
-        if(empty($booking)){
-            return wp_delete_post($booking[0]->ID);
+        if(!empty($booking)){
+            foreach($booking as $post){
+                wp_delete_post($post->ID);
+            }
+            return true;
         } else {
             return new Exception('Could not find a booking with that ID');
         }
