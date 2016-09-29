@@ -105,7 +105,7 @@ class Booking
         
         $result = wp_insert_post($post);
         
-        if($result){
+        if(is_int($result)){
             $property_args = array(
                 'post_type' => 'villa',
                 'meta_query' => array(
@@ -123,14 +123,11 @@ class Booking
             update_field('end_date', $request['end_date'], $result);
             update_field('villa', array($properties[0]->ID), $result);
             update_field('booking_id', $request['booking_id'], $result);
-        }
-        
-        
-        if (is_integer($result)) {
-            return get_post($result);
         } else {
-            return new WP_Error('cant-create', __('Could not create the booking'), array('status' => 500));
+            return $result;
         }
+        
+        return get_post($result);
     }
     
     /**
