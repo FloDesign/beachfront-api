@@ -131,7 +131,10 @@ class Booking
             return $result;
         }
         
-        return get_post($result);
+        $booking = get_post($result);
+        
+        $booking->villa = $properties[0];
+        return $booking;
     }
     
     /**
