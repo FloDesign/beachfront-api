@@ -145,10 +145,10 @@ class Booking
         
         $booking = get_posts($args);
         
-        die(var_dump($booking));
-        
-        $request['ID'] = $booking->ID;
-        $update = wp_update_post($request);
+        foreach($request as $key => $value){
+            $booking->$key = $value;
+        }
+        $update = wp_update_post($booking);
         
         if($update) {
             if (isset($request['start_date'])) {
