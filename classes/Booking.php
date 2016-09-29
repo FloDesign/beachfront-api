@@ -186,7 +186,7 @@ class Booking
             }
             
             if($post_id != 0){
-                $booking = get_post($post_id);
+                die(var_dump($booking = get_post($post_id)));
             } else {
                 throw new Exception;
             }
