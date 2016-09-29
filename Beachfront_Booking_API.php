@@ -130,11 +130,11 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function update_item($request)
     {
-        $request['id'] = $request->get_param('id');
-        $data          = $this->booking->updateBooking($request);
+        $data = $request->get_params();
+        $result = $this->booking->updateBooking($request);
         
-        if (is_array($data)) {
-            return new WP_REST_Response($data, 200);
+        if (is_array($result)) {
+            return new WP_REST_Response($result, 200);
         }
         
         return new WP_Error('cant-update', __('Could not update the booking'), array('status' => 500));

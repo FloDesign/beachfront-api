@@ -133,6 +133,7 @@ class Booking
     public function updateBooking($request)
     {
         die(var_dump($request));
+        
         $args = array(
             'post_type'      => 'booking',
             'meta_query' => array(
