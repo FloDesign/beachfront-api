@@ -85,23 +85,23 @@ class Booking
      */
     public function createBooking($request)
     {
-        if(!array_key_exists('start_date', $request)){
+        if ( ! array_key_exists('start_date', $request)) {
             return new \Exception('Requires a start_date');
         }
-    
-        if(!array_key_exists('end_date', $request)){
+        
+        if ( ! array_key_exists('end_date', $request)) {
             return new \Exception('Requires an end_date');
         }
-    
-        if(!array_key_exists('property_id', $request)){
+        
+        if ( ! array_key_exists('property_id', $request)) {
             return new \Exception('Requires a property_id');
         }
-    
-        if(!array_key_exists('booking_id', $request)){
+        
+        if ( ! array_key_exists('booking_id', $request)) {
             return new \Exception('Requires a booking_id');
         }
         
-        if(array_key_exists('post_status', $request)){
+        if (array_key_exists('post_status', $request)) {
             $status = $request['post_status'];
         } else {
             $status = 'draft';
@@ -109,24 +109,24 @@ class Booking
         
         $post = array(
             'post_content' => '',
-            'post_title' => $request['booking_id'],
+            'post_title'   => $request['booking_id'],
             'post_excerpt' => '',
-            'post_type' => 'booking',
-            'post_status' => $status
+            'post_type'    => 'booking',
+            'post_status'  => $status,
         );
         
         $result = wp_insert_post($post, true);
         
-        if(is_int($result)){
+        if (is_int($result)) {
             $property_args = array(
-                'post_type' => 'villa',
+                'post_type'  => 'villa',
                 'meta_query' => array(
                     array(
-                        'key' => 'property_id',
+                        'key'     => 'property_id',
                         'compare' => '==',
-                        'value' => $request['property_id']
-                    )
-                )
+                        'value'   => $request['property_id'],
+                    ),
+                ),
             );
             
             $properties = get_posts($property_args);
@@ -141,8 +141,9 @@ class Booking
         
         $booking = get_post($result);
         
-        $booking->villa = $properties[0];
+        $booking->villa      = $properties[0];
         $booking->booking_id = get_field('booking_id', $booking);
+        
         return $booking;
     }
     
@@ -202,18 +203,11 @@ class Booking
                     
                     update_field('villa', $villa, $booking->ID);
                 }
-                if (isset($request['show_booking'])) {
-                    if ($request['show_booking'] == 'true') {
+                if (isset($request['post_status'])) {
                         $data = array(
                             'ID'          => $booking->ID,
-                            'post_status' => 'publish',
+                            'post_status' => $request['post_status'],
                         );
-                    } else {
-                        $data = array(
-                            'ID'          => $booking->ID,
-                            'post_status' => 'draft',
-                        );
-                    }
                     $post_id = wp_update_post($data, true);
                 }
             }
@@ -268,10 +262,11 @@ class Booking
         
         $booking = get_posts($args);
         
-        if(!empty($booking)){
-            foreach($booking as $post){
+        if ( ! empty($booking)) {
+            foreach ($booking as $post) {
                 wp_delete_post($post->ID);
             }
+            
             return true;
         } else {
             return new \Exception('Could not find a booking with that ID');
