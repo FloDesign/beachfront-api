@@ -133,7 +133,7 @@ class Booking
     public function updateBooking($request)
     {
         $args = array(
-            'post_type'      => 'booking',
+            'post_type'  => 'booking',
             'meta_query' => array(
                 array(
                     'key'     => 'booking_id',
@@ -145,14 +145,14 @@ class Booking
         
         $booking = get_posts($args);
         
-        if($booking) {
+        if ($booking) {
             if (isset($request['start_date'])) {
                 update_post_meta($booking[0]->ID, 'start_date', $request['start_date']);
             }
             if (isset($request['end_date'])) {
                 update_post_meta($booking[0]->ID, 'end_date', $request['end_date']);
             }
-            if(isset($request['property_id'])){
+            if (isset($request['property_id'])) {
                 $villa_args = array(
                     'post_type'  => 'villa',
                     'meta_query' => array(
@@ -161,13 +161,20 @@ class Booking
                         'value'   => $request['property_id'],
                     ),
                 );
-    
+                
                 $villa = get_posts($villa_args);
                 
                 update_field('villa', $villa, $booking[0]->ID);
             }
+            if (isset($request['show_booking'])) {
+                if($request['show_booking'] == true){
+                    wp_transition_post_status( 'published', $booking[0]->post_status, $booking );
+                } else {
+                    wp_transition_post_status( 'draft', $booking[0]->post_status, $booking );
+                }
+            }
         }
-    
+        
         foreach ($booking as $post) {
             $post->startdate = get_field('start_date', $post->ID);
             $post->enddate   = get_field('end_date', $post->ID);
