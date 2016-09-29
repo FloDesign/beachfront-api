@@ -104,10 +104,8 @@ class Booking
      *
      * @return WP_Query
      */
-    public
-    function updateBooking(
-        $request
-    ) {
+    public function updateBooking($request)
+    {
         try {
             $args = array(
                 'post_type'   => 'booking',
@@ -196,12 +194,31 @@ class Booking
      *
      * @return mixed
      */
-    public
-    function deleteBooking(
-        $request
-    ) {
-        if ( ! isset($request['id'])) {
-            return wp_delete_post($request['id']);
-        }
+    public function deleteBooking($request)
+    {
+        $args = array(
+            'post_type'   => 'booking',
+            'post_status' => array(
+                'publish',
+                'pending',
+                'draft',
+                'auto-draft',
+                'future',
+                'private',
+                'inherit',
+                'trash',
+            ),
+            'meta_query'  => array(
+                array(
+                    'key'     => 'booking_id',
+                    'compare' => '==',
+                    'value'   => $request['id'],
+                ),
+            ),
+        );
+        
+        $booking = get_posts($args);
+        
+        return wp_delete_post($booking[0]->ID);
     }
 }
