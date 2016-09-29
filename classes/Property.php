@@ -6,7 +6,7 @@ namespace Beachfront;
 
 class Property
 {
-    public function getProperties($params)
+    public function getProperty($params)
     {
         if (isset($params['id'])) {
             $args = array(
