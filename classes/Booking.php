@@ -171,10 +171,17 @@ class Booking
                 }
                 if (isset($request['show_booking'])) {
                     if ($request['show_booking'] == 'true') {
-                        wp_transition_post_status('publish', $booking->post_status, $booking);
+                        $data = array(
+                            'ID' => $booking->ID,
+                            'post_status' => 'publish'
+                        );
                     } else {
-                        wp_transition_post_status('draft', $booking->post_status, $booking);
+                        $data = array(
+                            'ID' => $booking->ID,
+                            'post_status' => 'publish'
+                        );
                     }
+                    wp_update_post($data);
                 }
             }
             
