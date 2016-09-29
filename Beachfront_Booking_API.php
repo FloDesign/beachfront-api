@@ -171,7 +171,8 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function delete_item($request)
     {
-        $deleted = $this->booking->deleteBooking($request);
+        $params = $request->getParams();
+        $deleted = $this->booking->deleteBooking($params);
         if ($deleted instanceof Exception) {
             return new WP_Error('cant-delete', __($deleted->getMessage()), array('status' => 500));
         }
