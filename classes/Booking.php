@@ -175,13 +175,15 @@ class Booking
                             'ID' => $booking->ID,
                             'post_status' => 'publish'
                         );
+                        wp_update_post($data);
                     } else {
                         $data = array(
                             'ID' => $booking->ID,
                             'post_status' => 'publish'
                         );
+                        wp_update_post($data);
                     }
-                    wp_update_post($data);
+                    
                 }
             }
             
