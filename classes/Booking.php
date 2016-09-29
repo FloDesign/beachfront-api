@@ -132,8 +132,6 @@ class Booking
      */
     public function updateBooking($request)
     {
-        die(var_dump($request));
-        
         $args = array(
             'post_type'      => 'booking',
             'meta_query' => array(
@@ -146,6 +144,8 @@ class Booking
         );
         
         $booking = get_posts($args);
+        
+        die(var_dump($request['post_content']));
         
         foreach($request as $key => $value){
             $booking->$key = $value;
