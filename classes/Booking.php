@@ -104,7 +104,8 @@ class Booking
         $post = array(
             'post_content' => '',
             'post_title' => $request['booking_id'],
-            'post_excerpt' => ''
+            'post_excerpt' => '',
+            'post_type' => 'booking'
         );
         
         $result = wp_insert_post($post, true);
