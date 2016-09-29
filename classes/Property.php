@@ -10,7 +10,7 @@ class Property
     {
         if (isset($params['id'])) {
             $args = array(
-                'post_type'  => 'property',
+                'post_type'  => 'villa',
                 'meta_query' => array(
                     array(
                         'key'     => 'property_id',
@@ -21,7 +21,7 @@ class Property
             );
         } else {
             $args = array(
-                'post_type' => 'property',
+                'post_type' => 'villa',
             );
         }
         
