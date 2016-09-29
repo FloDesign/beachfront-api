@@ -182,13 +182,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     
     public function get_property($request)
     {
-        if(json_decode($request) != null) {
-            $data = json_decode($request);
-        } else {
-            $data = $request;
-        }
-    
-        $result = $this->property->getProperty($data);
+        $result = $this->property->getProperty($request);
     
         if ($result instanceof WP_Error) {
             return $result;
