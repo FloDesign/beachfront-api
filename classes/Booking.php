@@ -179,11 +179,11 @@ class Booking
                     } else {
                         $data = array(
                             'ID'          => $booking->ID,
-                            'post_status' => 'publish',
-                            'post_date_gmt' => date("Y-m-d H:i:s")
+                            'post_status' => 'draft',
+                            //'post_date_gmt' => date("Y-m-d H:i:s", strtotime('9999-01-01'))
                         );
                     }
-                    die(var_dump(wp_update_post($data, true)));
+                    wp_update_post($data, true);
                 }
             }
             
