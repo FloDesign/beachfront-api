@@ -189,6 +189,8 @@ class Booking
             
             if ($post_id instanceof WP_Error) {
                 return $post_id;
+            } else {
+                $booking = get_post($post_id);
             }
             
             $booking->startdate = get_field('start_date', $booking->ID);
