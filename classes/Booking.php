@@ -261,7 +261,7 @@ class Booking
         $booking = get_posts($args);
         
         if(count($booking > 0)){
-            return wp_delete_post($booking[0]->ID);
+            return wp_delete_post($booking->ID);
         } else {
             return new Exception('Could not find a booking with that ID');
         }
