@@ -181,8 +181,14 @@ class Booking
                             'post_status' => 'publish',
                         );
                     }
-                    die(var_dump(wp_update_post($data)));
+                    $post_id = wp_update_post($data);
                 }
+            }
+            
+            if($post_id != 0){
+                $booking = get_post($post_id);
+            } else {
+                throw new Exception;
             }
             
             $booking->startdate = get_field('start_date', $booking->ID);
