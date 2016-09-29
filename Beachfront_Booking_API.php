@@ -10,7 +10,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     
     public function __construct()
     {
-        $this->booking = new Booking();
+        $this->booking  = new Booking();
         $this->property = new Property();
     }
     
@@ -74,7 +74,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
         );
         register_rest_route(
             $namespace,
-            '/properties' . '/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
+            '/properties'.'/(?P<id>[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
             array(
                 array(
                     'methods'  => WP_REST_Server::READABLE,
@@ -134,14 +134,12 @@ class Beachfront_Booking_API extends WP_REST_Controller
      */
     public function create_item($request)
     {
-        $data = $this->booking->createBooking($request);
-        if (is_array($data)) {
-            return new WP_REST_Response($data, 200);
+        $result = $this->booking->createBooking($request);
+        if ($result instanceof Exception) {
+            return new WP_Error('cant-create', __($result->getMessage()), array('status' => 500));
         }
         
-        return new WP_Error('cant-create', __('Could not create a booking'), array('status' => 500));
-        
-        
+        return new WP_REST_Response($result, 200);
     }
     
     /**
@@ -183,7 +181,7 @@ class Beachfront_Booking_API extends WP_REST_Controller
     public function get_property($request)
     {
         $result = $this->property->getProperty($request);
-    
+        
         if ($result instanceof WP_Error) {
             return $result;
         } else {

@@ -86,19 +86,19 @@ class Booking
     public function createBooking($request)
     {
         if(!array_key_exists('start_date', $request)){
-            return new WP_Error('cant-create', __('Requires a start_date'), array('status' => 500));
+            return new \Exception('Requires a start_date');
         }
     
         if(!array_key_exists('end_date', $request)){
-            return new WP_Error('cant-create', __('Requires an end_date'), array('status' => 500));
+            return new \Exception('Requires an end_date');
         }
     
         if(!array_key_exists('property_id', $request)){
-            return new WP_Error('cant-create', __('Requires a property_id'), array('status' => 500));
+            return new \Exception('Requires a property_id');
         }
     
         if(!array_key_exists('booking_id', $request)){
-            return new WP_Error('cant-create', __('Requires a booking_id'), array('status' => 500));
+            return new \Exception('Requires a booking_id');
         }
         
         $post = array();
