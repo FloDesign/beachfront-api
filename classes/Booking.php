@@ -145,22 +145,33 @@ class Booking
         
         $booking = get_posts($args);
         
-        foreach($request as $key => $value){
-            $data = $request->get_param($key);
-            $booking[$key] = $data;
-        }
-        
-        die(var_dump($booking));
-        
-        $update = wp_update_post($booking);
-        
-        if($update) {
+        if($booking) {
             if (isset($request['start_date'])) {
-                $updateMeta = update_post_meta($booking->ID, 'start_date', $request['start_date']);
+                update_post_meta($booking->ID, 'start_date', $request['start_date']);
             }
             if (isset($request['end_date'])) {
-                $updateMeta = update_post_meta($booking->ID, 'end_date', $request['end_date']);
+                update_post_meta($booking->ID, 'end_date', $request['end_date']);
             }
+            if(isset($request['property_id'])){
+                $villa_args = array(
+                    'post_type'  => 'villa',
+                    'meta_query' => array(
+                        'key'     => 'property_id',
+                        'compare' => '==',
+                        'value'   => $request['property_id'],
+                    ),
+                );
+    
+                $villa = get_posts($villa_args);
+                
+                update_field('villa', $villa, $booking->ID);
+            }
+        }
+    
+        foreach ($booking as $post) {
+            $post->startdate = get_field('start_date', $post->ID);
+            $post->enddate   = get_field('end_date', $post->ID);
+            $post->villa     = get_field('villa', $post->ID);
         }
         
         return $booking;
