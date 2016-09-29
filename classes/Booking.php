@@ -183,7 +183,7 @@ class Booking
                             'post_date_gmt' => date("Y-m-d H:i:s")
                         );
                     }
-                    $post_id = wp_update_post($data, true);
+                    die(var_dump(wp_update_post($data, true)));
                 }
             }
             
