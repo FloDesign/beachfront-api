@@ -103,7 +103,7 @@ class Booking
         
         $post = array();
         
-        $result = wp_insert_post($post);
+        $result = wp_insert_post($post, true);
         
         if(is_int($result)){
             $property_args = array(
