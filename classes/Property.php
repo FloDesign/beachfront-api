@@ -53,6 +53,7 @@ class Property
                 
                 if ($villa[0]->ID == $property->ID) {
                     $property->bookings = $bookings;
+                    $booking->booking_id = get_field('booking_id', $booking->ID);
                 }
             }
         }
