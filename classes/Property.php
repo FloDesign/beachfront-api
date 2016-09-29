@@ -30,6 +30,8 @@ class Property
         $properties = get_posts($args);
         
         foreach ($properties as $property) {
+            $property->property_id = get_field('property_id', $property->ID);
+            
             $booking_args = array(
                 'post_type'   => 'booking',
                 'post_status' => array(
