@@ -48,7 +48,8 @@ class Property
             
             foreach ($bookings as $booking) {
                 $villa = get_field('villa', $booking->ID);
-                if ($villa->ID = $property->ID) {
+                
+                if ($villa->ID == $property->ID) {
                     $property->bookings = $bookings;
                 }
             }
